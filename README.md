@@ -1,2 +1,1 @@
-# automatic-parakeet
-warehouse manger
+مساعد مهندس الدعم الفني 
