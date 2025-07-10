@@ -1,0 +1,1792 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدعم الفني شركة هاي تك</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #06b6d4;
+            --light-color: #f8fafc;
+            --dark-color: #1e293b;
+            --border-radius: 12px;
+            --box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 0;
+            margin: 0;
+        }
+
+        .main-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            margin: 20px;
+            padding: 30px;
+            box-shadow: var(--box-shadow);
+            min-height: calc(100vh - 40px);
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: var(--border-radius);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .header-section h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header-section p {
+            font-size: 1.1rem;
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .filters-section {
+            background: white;
+            padding: 25px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-bottom: 30px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .filters-section h5 {
+            color: var(--dark-color);
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-control, .form-select {
+            border-radius: 8px;
+            border: 2px solid #e2e8f0;
+            padding: 12px 16px;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            outline: none;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-group .form-control {
+            padding-right: 45px;
+        }
+
+        .input-group .input-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+            z-index: 3;
+        }
+
+        .control-buttons {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: var(--transition);
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--success-color), #059669);
+            color: white;
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, var(--warning-color), #d97706);
+            color: white;
+        }
+
+        .btn-info {
+            background: linear-gradient(135deg, var(--info-color), #0891b2);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .nav-tabs {
+            border: none;
+            margin-bottom: 30px;
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 10px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .nav-tabs .nav-link {
+            border: none;
+            border-radius: 8px;
+            padding: 15px 25px;
+            font-weight: 600;
+            color: var(--dark-color);
+            transition: var(--transition);
+            margin: 0 5px;
+        }
+
+        .nav-tabs .nav-link:hover {
+            background: rgba(37, 99, 235, 0.1);
+            color: var(--primary-color);
+        }
+
+        .nav-tabs .nav-link.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
+
+        .tab-content {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--box-shadow);
+            min-height: 400px;
+        }
+
+        .loading-spinner {
+            text-align: center;
+            padding: 50px;
+            color: #64748b;
+        }
+
+        .loading-spinner i {
+            font-size: 2rem;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .card {
+            border: none;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-body {
+            padding: 25px;
+        }
+
+        .priority-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .priority-1 { background: #fee2e2; color: #dc2626; }
+        .priority-2 { background: #fef3c7; color: #d97706; }
+        .priority-3 { background: #dcfce7; color: #16a34a; }
+
+        .status-badge {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-open { background: #dbeafe; color: #2563eb; }
+        .status-in_progress { background: #fef3c7; color: #d97706; }
+        .status-solved { background: #dcfce7; color: #16a34a; }
+        .status-closed { background: #f3f4f6; color: #6b7280; }
+
+        @media (max-width: 768px) {
+            .main-container {
+                margin: 10px;
+                padding: 20px;
+            }
+            
+            .header-section h1 {
+                font-size: 2rem;
+            }
+            
+            .control-buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container fade-in">
+        <div class="header-section">
+            <h1><i class="fas fa-tools"></i> الدعم الفني شركة هاي تك</h1>
+            <p>نظام متقدم لإدارة المشاكل التقنية والدعم الفني</p>
+        </div>
+
+        <div class="filters-section">
+            <h5><i class="fas fa-filter"></i> فلاتر البحث والتصفية</h5>
+            <div class="row g-3">
+                <div class="col-md-6 col-lg-3">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="searchInput" placeholder="البحث في المشاكل...">
+                        <span class="input-icon"><i class="fas fa-search"></i></span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="input-group">
+                        <select class="form-select" id="statusFilter">
+                            <option value="">جميع الحالات</option>
+                            <option value="open">🔴 مفتوحة</option>
+                            <option value="in_progress">🟡 قيد المعالجة</option>
+                            <option value="solved">🟢 محلولة</option>
+                            <option value="closed">⚫ مغلقة</option>
+                        </select>
+                        <span class="input-icon"><i class="fas fa-tasks"></i></span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="input-group">
+                        <select class="form-select" id="priorityFilter">
+                            <option value="">جميع الأولويات</option>
+                            <option value="1">🔥 عالية</option>
+                            <option value="2">⚡ متوسطة</option>
+                            <option value="3">📝 منخفضة</option>
+                        </select>
+                        <span class="input-icon"><i class="fas fa-exclamation-triangle"></i></span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="modelFilter" placeholder="البحث بالطراز...">
+                        <span class="input-icon"><i class="fas fa-print"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="control-buttons">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addIssueModal">
+                <i class="fas fa-plus"></i> إضافة مشكلة جديدة
+            </button>
+            <button class="btn btn-success" id="refreshData">
+                <i class="fas fa-sync-alt"></i> تحديث البيانات
+            </button>
+            <button class="btn btn-info" id="exportData">
+                <i class="fas fa-download"></i> تصدير البيانات
+            </button>
+            <button class="btn btn-warning" id="clearFilters">
+                <i class="fas fa-eraser"></i> مسح الفلاتر
+            </button>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addClientModal">
+                <i class="fas fa-user-plus"></i> إضافة عميل
+            </button>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTechnicianModal">
+                <i class="fas fa-user-tie"></i> إضافة فني
+            </button>
+        </div>
+
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <button class="nav-link active" id="issues-tab" data-bs-toggle="tab" data-bs-target="#issues" type="button" role="tab">
+                    <i class="fas fa-bug"></i> المشاكل
+                    <span class="badge bg-light text-dark ms-2" id="issuesCount">0</span>
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" id="clients-tab" data-bs-toggle="tab" data-bs-target="#clients" type="button" role="tab">
+                    <i class="fas fa-users"></i> العملاء
+                    <span class="badge bg-light text-dark ms-2" id="clientsCount">0</span>
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" id="technicians-tab" data-bs-toggle="tab" data-bs-target="#technicians" type="button" role="tab">
+                    <i class="fas fa-hard-hat"></i> الفنيون
+                    <span class="badge bg-light text-dark ms-2" id="techniciansCount">0</span>
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" id="stats-tab" data-bs-toggle="tab" data-bs-target="#stats" type="button" role="tab">
+                    <i class="fas fa-chart-bar"></i> الإحصائيات
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" id="dashboard-tab" data-bs-toggle="tab" data-bs-target="#dashboard" type="button" role="tab">
+                    <i class="fas fa-tachometer-alt"></i> لوحة التحكم
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="issues" role="tabpanel">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4><i class="fas fa-list"></i> قائمة المشاكل</h4>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-outline-primary btn-sm" id="listView">
+                            <i class="fas fa-list"></i> قائمة
+                        </button>
+                        <button class="btn btn-outline-primary btn-sm" id="cardView">
+                            <i class="fas fa-th"></i> بطاقات
+                        </button>
+                    </div>
+                </div>
+                <div id="issuesList">
+                    <div class="loading-spinner">
+                        <i class="fas fa-spinner"></i>
+                        <p>جاري تحميل المشاكل...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="clients" role="tabpanel">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4><i class="fas fa-users"></i> قائمة العملاء</h4>
+                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addClientModal">
+                        <i class="fas fa-plus"></i> إضافة عميل
+                    </button>
+                </div>
+                <div id="clientsList">
+                    <div class="loading-spinner">
+                        <i class="fas fa-spinner"></i>
+                        <p>جاري تحميل العملاء...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="technicians" role="tabpanel">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4><i class="fas fa-hard-hat"></i> قائمة الفنيين</h4>
+                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addTechnicianModal">
+                        <i class="fas fa-plus"></i> إضافة فني
+                    </button>
+                </div>
+                <div id="techniciansList">
+                    <div class="loading-spinner">
+                        <i class="fas fa-spinner"></i>
+                        <p>جاري تحميل الفنيين...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="stats" role="tabpanel">
+                <h4><i class="fas fa-chart-line"></i> الإحصائيات التفصيلية</h4>
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="card border-0 bg-primary text-white">
+                            <div class="card-body text-center">
+                                <i class="fas fa-bug fa-2x mb-2"></i>
+                                <h5 class="card-title">إجمالي المشاكل</h5>
+                                <h2 class="card-text" id="totalIssues">0</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card border-0 bg-warning text-white">
+                            <div class="card-body text-center">
+                                <i class="fas fa-clock fa-2x mb-2"></i>
+                                <h5 class="card-title">قيد المعالجة</h5>
+                                <h2 class="card-text" id="inProgressIssues">0</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card border-0 bg-success text-white">
+                            <div class="card-body text-center">
+                                <i class="fas fa-check-circle fa-2x mb-2"></i>
+                                <h5 class="card-title">محلولة</h5>
+                                <h2 class="card-text" id="solvedIssues">0</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card border-0 bg-danger text-white">
+                            <div class="card-body text-center">
+                                <i class="fas fa-exclamation-triangle fa-2x mb-2"></i>
+                                <h5 class="card-title">عالية الأولوية</h5>
+                                <h2 class="card-text" id="highPriorityIssues">0</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="statsList">
+                    <div class="loading-spinner">
+                        <i class="fas fa-spinner"></i>
+                        <p>جاري تحميل الإحصائيات...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="dashboard" role="tabpanel">
+                <h4><i class="fas fa-tachometer-alt"></i> لوحة التحكم</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5><i class="fas fa-chart-pie"></i> توزيع المشاكل حسب الحالة</h5>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="statusChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5><i class="fas fa-chart-bar"></i> المشاكل حسب الأولوية</h5>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="priorityChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addIssueModal" tabindex="-1" aria-labelledby="addIssueModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="addIssueModalLabel">
+                        <i class="fas fa-plus-circle"></i> إضافة مشكلة جديدة
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addIssueForm">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">
+                                    <i class="fas fa-heading"></i> عنوان المشكلة *
+                                </label>
+                                <input type="text" class="form-control" id="issueTitle" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">
+                                    <i class="fas fa-print"></i> الطراز *
+                                </label>
+                                <input type="text" class="form-control" id="printerModel" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">
+                                    <i class="fas fa-align-left"></i> وصف المشكلة
+                                </label>
+                                <textarea class="form-control" id="issueDescription" rows="3" placeholder="اكتب وصفاً مفصلاً للمشكلة..."></textarea>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">
+                                    <i class="fas fa-barcode"></i> الرقم التسلسلي *
+                                </label>
+                                <input type="text" class="form-control" id="serialNumber" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">
+                                    <i class="fas fa-user"></i> العميل *
+                                </label>
+                                <select class="form-select" id="clientId" required>
+                                    </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">
+                                    <i class="fas fa-tint"></i> نوع الحبر
+                                </label>
+                                <input type="text" class="form-control" id="inkType" placeholder="مثال: حبر أسود، ملون">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">
+                                    <i class="fas fa-layer-group"></i> نوع السطح
+                                </label>
+                                <input type="text" class="form-control" id="surfaceType" placeholder="مثال: ورق، بلاستيك">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">
+                                    <i class="fas fa-exclamation-triangle"></i> الأولوية
+                                </label>
+                                <select class="form-select" id="priority" required>
+                                    <option value="1">🔥 عالية</option>
+                                    <option value="2" selected>⚡ متوسطة</option>
+                                    <option value="3">📝 منخفضة</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">
+                                    <i class="fas fa-user-edit"></i> المبلغ عنها بواسطة
+                                </label>
+                                <input type="text" class="form-control" id="reportedBy" placeholder="اسم المبلغ">
+                            </div>
+                        </div>
+                        <div class="mt-4 d-flex gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> حفظ المشكلة
+                            </button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                <i class="fas fa-times"></i> إلغاء
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editIssueModal" tabindex="-1" aria-labelledby="editIssueModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-warning text-white">
+                    <h5 class="modal-title" id="editIssueModalLabel">
+                        <i class="fas fa-edit"></i> تعديل المشكلة
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editIssueForm">
+                        <input type="hidden" id="editIssueId">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">عنوان المشكلة *</label>
+                                <input type="text" class="form-control" id="editIssueTitle" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">الحالة</label>
+                                <select class="form-select" id="editIssueStatus" required>
+                                    <option value="open">مفتوحة</option>
+                                    <option value="in_progress">قيد المعالجة</option>
+                                    <option value="solved">محلولة</option>
+                                    <option value="closed">مغلقة</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">وصف المشكلة</label>
+                                <textarea class="form-control" id="editIssueDescription" rows="3"></textarea>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">الأولوية</label>
+                                <select class="form-select" id="editIssuePriority" required>
+                                    <option value="1">عالية</option>
+                                    <option value="2">متوسطة</option>
+                                    <option value="3">منخفضة</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">
+                                    <i class="fas fa-hard-hat"></i> الفني المعين
+                                </label>
+                                <select class="form-select" id="editIssueTechnicianId">
+                                    <option value="">لم يتم التعيين</option>
+                                    </select>
+                            </div>
+                        </div>
+                        <div class="mt-4 d-flex gap-2">
+                            <button type="submit" class="btn btn-warning">
+                                <i class="fas fa-save"></i> حفظ التعديلات
+                            </button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                <i class="fas fa-times"></i> إلغاء
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addClientModal" tabindex="-1" aria-labelledby="addClientModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="addClientModalLabel">
+                        <i class="fas fa-user-plus"></i> إضافة عميل جديد
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addClientForm">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">اسم العميل *</label>
+                                <input type="text" class="form-control" id="clientName" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">رقم الهاتف *</label>
+                                <input type="text" class="form-control" id="clientPhone" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">البريد الإلكتروني</label>
+                                <input type="email" class="form-control" id="clientEmail">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">الشركة</label>
+                                <input type="text" class="form-control" id="clientCompany">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">الموقع</label>
+                                <input type="text" class="form-control" id="clientLocation">
+                            </div>
+                            <div class="col-md-6 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="clientServiceContract">
+                                    <label class="form-check-label" for="clientServiceContract">
+                                        عقد خدمة
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4 d-flex gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> حفظ العميل
+                            </button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                <i class="fas fa-times"></i> إلغاء
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addTechnicianModal" tabindex="-1" aria-labelledby="addTechnicianModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="addTechnicianModalLabel">
+                        <i class="fas fa-user-tie"></i> إضافة فني جديد
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addTechnicianForm">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">اسم الفني *</label>
+                                <input type="text" class="form-control" id="technicianName" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">التخصص</label>
+                                <input type="text" class="form-control" id="technicianSpecialty">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">رقم التواصل</label>
+                                <input type="text" class="form-control" id="technicianContact">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">مستوى الشهادة</label>
+                                <input type="number" class="form-control" id="technicianCertificationLevel" min="1">
+                            </div>
+                        </div>
+                        <div class="mt-4 d-flex gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> حفظ الفني
+                            </button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                <i class="fas fa-times"></i> إلغاء
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+
+    <script>
+        // متغيرات عامة
+        let allIssues = [];
+        let filteredIssues = [];
+        let allClients = []; // لتخزين بيانات العملاء
+        let allTechnicians = []; // لتخزين بيانات الفنيين
+        let statusChart = null;
+        let priorityChart = null;
+        let currentView = 'card';
+
+        // تهيئة التطبيق
+        $(document).ready(function () {
+            initializeApp();
+            setupEventListeners();
+            loadIssues();
+            loadClients(); // تحميل العملاء عند بدء التشغيل
+            loadTechnicians(); // تحميل الفنيين عند بدء التشغيل
+        });
+
+        // تهيئة التطبيق
+        function initializeApp() {
+            // إضافة تأثيرات بصرية
+            $('body').addClass('fade-in');
+            
+            // تهيئة المخططات
+            initializeCharts();
+            
+            // تحديث الوقت
+            updateCurrentTime();
+            setInterval(updateCurrentTime, 60000); // كل دقيقة
+        }
+
+        // إعداد مستمعي الأحداث
+        function setupEventListeners() {
+            // تحديث البيانات
+            $('#refreshData').click(function () {
+                $(this).html('<i class="fas fa-spinner fa-spin"></i> جاري التحديث...');
+                loadIssues();
+                loadClients();
+                loadTechnicians();
+                setTimeout(() => {
+                    $(this).html('<i class="fas fa-sync-alt"></i> تحديث البيانات');
+                }, 1000);
+            });
+
+            // إضافة مشكلة جديدة
+            $('#addIssueForm').submit(function (e) {
+                e.preventDefault();
+                addNewIssue();
+            });
+
+            // تعديل مشكلة
+            $('#editIssueForm').submit(function (e) {
+                e.preventDefault();
+                updateIssue();
+            });
+
+            // إضافة عميل جديد
+            $('#addClientForm').submit(function (e) {
+                e.preventDefault();
+                addNewClient();
+            });
+
+            // إضافة فني جديد
+            $('#addTechnicianForm').submit(function (e) {
+                e.preventDefault();
+                addNewTechnician();
+            });
+
+            // فلاتر البحث
+            $('#searchInput, #statusFilter, #priorityFilter, #modelFilter').on('input change', function () {
+                filterIssues();
+            });
+
+            // مسح الفلاتر
+            $('#clearFilters').click(function () {
+                clearAllFilters();
+            });
+
+            // تصدير البيانات
+            $('#exportData').click(function () {
+                exportToCSV();
+            });
+
+            // تغيير طريقة العرض
+            $('#listView').click(function () {
+                currentView = 'list';
+                displayIssues(filteredIssues);
+                $(this).addClass('active');
+                $('#cardView').removeClass('active');
+            });
+
+            $('#cardView').click(function () {
+                currentView = 'card';
+                displayIssues(filteredIssues);
+                $(this).addClass('active');
+                $('#listView').removeClass('active');
+            });
+
+            // تحديث الإحصائيات عند تغيير التبويب
+            $('#stats-tab').on('shown.bs.tab', function () {
+                loadStats();
+            });
+
+            $('#dashboard-tab').on('shown.bs.tab', function () {
+                updateCharts();
+            });
+            
+            // تحميل العملاء عند فتح تبويب العملاء
+            $('#clients-tab').on('shown.bs.tab', function () {
+                loadClients(true); // تمرير true للإشارة إلى أننا نريد عرضها في القائمة
+            });
+
+            // تحميل الفنيين عند فتح تبويب الفنيين
+            $('#technicians-tab').on('shown.bs.tab', function () {
+                loadTechnicians(true); // تمرير true للإشارة إلى أننا نريد عرضها في القائمة
+            });
+        }
+
+        // تحميل المشاكل
+        function loadIssues() {
+            showLoadingSpinner('#issuesList');
+            
+            $.ajax({
+                url: '/api/problems',
+                type: 'GET',
+                success: function (response) {
+                    if (response) { // Flask API returns direct JSON, not {data: ...}
+                        allIssues = response;
+                        filterIssues(); // فلترة وعرض المشاكل بعد التحميل
+                        updateStatistics();
+                        updateIssuesCount();
+                        showSuccessMessage('تم تحميل المشاكل بنجاح');
+                    } else {
+                        showErrorMessage('لا توجد بيانات متاحة للمشاكل');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('خطأ في تحميل المشاكل:', error);
+                    $('#issuesList').html(`
+                        <div class="alert alert-danger" role="alert">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            فشل في تحميل المشاكل. يرجى المحاولة مرة أخرى.
+                            <button class="btn btn-sm btn-outline-danger ms-2" onclick="loadIssues()">
+                                <i class="fas fa-redo"></i> إعادة المحاولة
+                            </button>
+                        </div>
+                    `);
+                }
+            });
+        }
+
+        // تحميل العملاء
+        function loadClients(displayInList = false) {
+            if (displayInList) {
+                showLoadingSpinner('#clientsList');
+            }
+            $.ajax({
+                url: '/api/clients',
+                type: 'GET',
+                success: function (response) {
+                    if (response) {
+                        allClients = response;
+                        populateClientDropdowns();
+                        updateClientsCount();
+                        if (displayInList) {
+                            displayClients(allClients);
+                        }
+                    } else {
+                        if (displayInList) {
+                            $('#clientsList').html('<div class="alert alert-info">لا توجد بيانات للعملاء متاحة.</div>');
+                        }
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('خطأ في تحميل العملاء:', error);
+                    if (displayInList) {
+                        $('#clientsList').html(`
+                            <div class="alert alert-danger" role="alert">
+                                فشل في تحميل العملاء.
+                            </div>
+                        `);
+                    }
+                }
+            });
+        }
+
+        // عرض العملاء في التبويب الخاص بهم
+        function displayClients(clients) {
+            const container = $('#clientsList');
+            container.empty();
+            if (clients.length === 0) {
+                container.html(`
+                    <div class="text-center py-5">
+                        <i class="fas fa-users fa-3x text-muted mb-3"></i>
+                        <h5 class="text-muted">لا توجد عملاء مسجلين</h5>
+                        <p class="text-muted">يمكنك إضافة عميل جديد باستخدام الزر أعلاه</p>
+                    </div>
+                `);
+                return;
+            }
+
+            const tableHtml = `
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>الاسم</th>
+                                <th>الهاتف</th>
+                                <th>البريد الإلكتروني</th>
+                                <th>الشركة</th>
+                                <th>عقد خدمة</th>
+                                <th>الموقع</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${clients.map(client => `
+                                <tr>
+                                    <td>${client.name}</td>
+                                    <td>${client.contact_phone}</td>
+                                    <td>${client.email || 'لا يوجد'}</td>
+                                    <td>${client.company || 'لا يوجد'}</td>
+                                    <td>${client.service_contract ? '<i class="fas fa-check-circle text-success"></i>' : '<i class="fas fa-times-circle text-danger"></i>'}</td>
+                                    <td>${client.location || 'لا يوجد'}</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary" onclick="editClient(${client.id})">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-danger" onclick="deleteClient(${client.id})">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+            container.html(tableHtml);
+        }
+
+        // تحميل الفنيين
+        function loadTechnicians(displayInList = false) {
+            if (displayInList) {
+                showLoadingSpinner('#techniciansList');
+            }
+            $.ajax({
+                url: '/api/technicians',
+                type: 'GET',
+                success: function (response) {
+                    if (response) {
+                        allTechnicians = response;
+                        populateTechnicianDropdowns();
+                        updateTechniciansCount();
+                        if (displayInList) {
+                            displayTechnicians(allTechnicians);
+                        }
+                    } else {
+                        if (displayInList) {
+                            $('#techniciansList').html('<div class="alert alert-info">لا توجد بيانات للفنيين متاحة.</div>');
+                        }
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('خطأ في تحميل الفنيين:', error);
+                    if (displayInList) {
+                        $('#techniciansList').html(`
+                            <div class="alert alert-danger" role="alert">
+                                فشل في تحميل الفنيين.
+                            </div>
+                        `);
+                    }
+                }
+            });
+        }
+
+        // عرض الفنيين في التبويب الخاص بهم
+        function displayTechnicians(technicians) {
+            const container = $('#techniciansList');
+            container.empty();
+            if (technicians.length === 0) {
+                container.html(`
+                    <div class="text-center py-5">
+                        <i class="fas fa-hard-hat fa-3x text-muted mb-3"></i>
+                        <h5 class="text-muted">لا توجد فنيين مسجلين</h5>
+                        <p class="text-muted">يمكنك إضافة فني جديد باستخدام الزر أعلاه</p>
+                    </div>
+                `);
+                return;
+            }
+
+            const tableHtml = `
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>الاسم</th>
+                                <th>التخصص</th>
+                                <th>التواصل</th>
+                                <th>مستوى الشهادة</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${technicians.map(tech => `
+                                <tr>
+                                    <td>${tech.name}</td>
+                                    <td>${tech.specialty || 'لا يوجد'}</td>
+                                    <td>${tech.contact || 'لا يوجد'}</td>
+                                    <td>${tech.certification_level || 'غير محدد'}</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary" onclick="editTechnician(${tech.id})">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-danger" onclick="deleteTechnician(${tech.id})">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+            container.html(tableHtml);
+        }
+
+        // ملء القائمة المنسدلة للعملاء
+        function populateClientDropdowns() {
+            const clientSelect = $('#clientId');
+            clientSelect.empty();
+            clientSelect.append('<option value="">اختر عميل...</option>');
+            allClients.forEach(client => {
+                clientSelect.append(`<option value="${client.id}">${client.name} - ${client.company || ''}</option>`);
+            });
+        }
+
+        // ملء القائمة المنسدلة للفنيين
+        function populateTechnicianDropdowns() {
+            const technicianSelect = $('#editIssueTechnicianId');
+            technicianSelect.empty();
+            technicianSelect.append('<option value="">لم يتم التعيين</option>');
+            allTechnicians.forEach(technician => {
+                technicianSelect.append(`<option value="${technician.id}">${technician.name}</option>`);
+            });
+        }
+
+        // عرض المشاكل
+        function displayIssues(issues) {
+            const container = $('#issuesList');
+            container.empty();
+
+            if (issues.length === 0) {
+                container.html(`
+                    <div class="text-center py-5">
+                        <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                        <h5 class="text-muted">لا توجد مشاكل مطابقة للبحث</h5>
+                        <p class="text-muted">جرب تعديل معايير البحث أو مسح الفلاتر</p>
+                    </div>
+                `);
+                return;
+            }
+
+            if (currentView === 'list') {
+                displayListView(issues, container);
+            } else {
+                displayCardView(issues, container);
+            }
+        }
+
+        // عرض البطاقات
+        function displayCardView(issues, container) {
+            const cardsHtml = issues.map(issue => {
+                const clientName = allClients.find(c => c.id === issue.client_id)?.name || 'غير معروف';
+                const technicianName = allTechnicians.find(t => t.id === issue.technician_id)?.name || 'لم يتم التعيين';
+                return `
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 issue-card" data-issue-id="${issue.id}">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h6 class="mb-0">${issue.title}</h6>
+                            <div class="dropdown">
+                                <button class="btn btn-sm" type="button" data-bs-toggle="dropdown">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#" onclick="editIssue(${issue.id})">
+                                        <i class="fas fa-edit"></i> تعديل
+                                    </a></li>
+                                    <li><a class="dropdown-item text-danger" href="#" onclick="deleteIssue(${issue.id})">
+                                        <i class="fas fa-trash"></i> حذف
+                                    </a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">${issue.description || 'لا يوجد وصف'}</p>
+                            <div class="row g-2 mb-3">
+                                <div class="col-6">
+                                    <small class="text-muted">الطراز:</small>
+                                    <div class="fw-bold">${issue.model}</div>
+                                </div>
+                                <div class="col-6">
+                                    <small class="text-muted">العميل:</small>
+                                    <div class="fw-bold">${clientName}</div>
+                                </div>
+                                <div class="col-12">
+                                    <small class="text-muted">الفني المعين:</small>
+                                    <div class="fw-bold">${technicianName}</div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="priority-badge priority-${issue.priority}">
+                                    ${getPriorityText(issue.priority)}
+                                </span>
+                                <span class="status-badge status-${issue.status}">
+                                    ${getStatusText(issue.status)}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="card-footer text-muted">
+                            <small>
+                                <i class="fas fa-clock"></i>
+                                ${formatDate(issue.created_at)}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            `;
+            }).join('');
+
+            container.html(`<div class="row">${cardsHtml}</div>`);
+        }
+
+        // عرض القائمة
+        function displayListView(issues, container) {
+            const tableHtml = `
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>العنوان</th>
+                                <th>الطراز</th>
+                                <th>العميل</th>
+                                <th>الفني</th>
+                                <th>الأولوية</th>
+                                <th>الحالة</th>
+                                <th>التاريخ</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${issues.map(issue => {
+                                const clientName = allClients.find(c => c.id === issue.client_id)?.name || 'غير معروف';
+                                const technicianName = allTechnicians.find(t => t.id === issue.technician_id)?.name || 'لم يتم التعيين';
+                                return `
+                                <tr>
+                                    <td>${issue.title}</td>
+                                    <td>${issue.model}</td>
+                                    <td>${clientName}</td>
+                                    <td>${technicianName}</td>
+                                    <td><span class="priority-badge priority-${issue.priority}">${getPriorityText(issue.priority)}</span></td>
+                                    <td><span class="status-badge status-${issue.status}">${getStatusText(issue.status)}</span></td>
+                                    <td>${formatDate(issue.created_at)}</td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <button class="btn btn-sm btn-outline-primary" onclick="editIssue(${issue.id})">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger" onclick="deleteIssue(${issue.id})">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            `;
+                            }).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+            container.html(tableHtml);
+        }
+
+        // إضافة مشكلة جديدة
+        function addNewIssue() {
+            const issueData = {
+                title: $('#issueTitle').val(),
+                description: $('#issueDescription').val(),
+                model: $('#printerModel').val(),
+                serial_number: $('#serialNumber').val(),
+                client_id: parseInt($('#clientId').val()), // تم تعديلها لتكون من قائمة منسدلة
+                ink_type: $('#inkType').val(),
+                surface_type: $('#surfaceType').val(),
+                priority: parseInt($('#priority').val()),
+                reported_by: $('#reportedBy').val(),
+                status: 'open'
+            };
+
+            // التحقق من أن العميل قد تم اختياره
+            if (!issueData.client_id) {
+                showErrorMessage('الرجاء اختيار العميل.');
+                return;
+            }
+
+            $.ajax({
+                url: '/api/problems',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(issueData),
+                success: function (response) {
+                    showSuccessMessage('تم إضافة المشكلة بنجاح!');
+                    $('#addIssueModal').modal('hide');
+                    $('#addIssueForm')[0].reset();
+                    loadIssues();
+                },
+                error: function (xhr) {
+                    showErrorMessage('خطأ في إضافة المشكلة: ' + (xhr.responseJSON ? xhr.responseJSON.error : xhr.responseText));
+                }
+            });
+        }
+
+        // تعديل مشكلة
+        function editIssue(issueId) {
+            const issue = allIssues.find(i => i.id === issueId);
+            if (!issue) return;
+
+            // ملء النموذج
+            $('#editIssueId').val(issue.id);
+            $('#editIssueTitle').val(issue.title);
+            $('#editIssueDescription').val(issue.description);
+            $('#editIssueStatus').val(issue.status);
+            $('#editIssuePriority').val(issue.priority);
+            
+            // ملء قائمة الفنيين المنسدلة وتحديد الفني الحالي
+            populateTechnicianDropdowns(); // تأكد من أن القائمة مملوءة
+            $('#editIssueTechnicianId').val(issue.technician_id || ''); // تحديد الفني الحالي أو لا شيء
+
+            $('#editIssueModal').modal('show');
+        }
+
+        // تحديث مشكلة
+        function updateIssue() {
+            const issueId = $('#editIssueId').val();
+            const updateData = {
+                title: $('#editIssueTitle').val(),
+                description: $('#editIssueDescription').val(),
+                status: $('#editIssueStatus').val(),
+                priority: parseInt($('#editIssuePriority').val()),
+                technician_id: $('#editIssueTechnicianId').val() === '' ? null : parseInt($('#editIssueTechnicianId').val()) // إرسال null إذا لم يتم اختيار فني
+            };
+
+            $.ajax({
+                url: `/api/problems/${issueId}`,
+                type: 'PUT',
+                contentType: 'application/json',
+                data: JSON.stringify(updateData),
+                success: function (response) {
+                    showSuccessMessage('تم تحديث المشكلة بنجاح!');
+                    $('#editIssueModal').modal('hide');
+                    loadIssues();
+                },
+                error: function (xhr) {
+                    showErrorMessage('خطأ في تحديث المشكلة: ' + (xhr.responseJSON ? xhr.responseJSON.error : xhr.responseText));
+                }
+            });
+        }
+
+        // حذف مشكلة
+        function deleteIssue(issueId) {
+            if (!confirm('هل أنت متأكد من حذف هذه المشكلة؟')) return;
+
+            $.ajax({
+                url: `/api/problems/${issueId}`,
+                type: 'DELETE',
+                success: function (response) {
+                    showSuccessMessage('تم حذف المشكلة بنجاح!');
+                    loadIssues();
+                },
+                error: function (xhr) {
+                    showErrorMessage('خطأ في حذف المشكلة: ' + (xhr.responseJSON ? xhr.responseJSON.error : xhr.responseText));
+                }
+            });
+        }
+
+        // فلترة المشاكل
+        function filterIssues() {
+            const searchTerm = $('#searchInput').val().toLowerCase();
+            const statusFilter = $('#statusFilter').val();
+            const priorityFilter = $('#priorityFilter').val();
+            const modelFilter = $('#modelFilter').val().toLowerCase();
+
+            filteredIssues = allIssues.filter(issue => {
+                const matchesSearch = !searchTerm || 
+                    issue.title.toLowerCase().includes(searchTerm) ||
+                    (issue.description && issue.description.toLowerCase().includes(searchTerm)) ||
+                    (issue.client_name && issue.client_name.toLowerCase().includes(searchTerm)) ||
+                    (issue.technician_name && issue.technician_name.toLowerCase().includes(searchTerm)); // البحث أيضاً بأسماء العملاء والفنيين
+                
+                const matchesStatus = !statusFilter || issue.status === statusFilter;
+                const matchesPriority = !priorityFilter || issue.priority.toString() === priorityFilter;
+                const matchesModel = !modelFilter || issue.model.toLowerCase().includes(modelFilter);
+
+                return matchesSearch && matchesStatus && matchesPriority && matchesModel;
+            });
+
+            displayIssues(filteredIssues);
+            updateIssuesCount();
+        }
+
+        // مسح جميع الفلاتر
+        function clearAllFilters() {
+            $('#searchInput').val('');
+            $('#statusFilter').val('');
+            $('#priorityFilter').val('');
+            $('#modelFilter').val('');
+            filterIssues(); // إعادة تطبيق الفلاتر بمسحها
+            showSuccessMessage('تم مسح جميع الفلاتر');
+        }
+
+        // إضافة عميل جديد
+        function addNewClient() {
+            const clientData = {
+                name: $('#clientName').val(),
+                contact_phone: $('#clientPhone').val(),
+                email: $('#clientEmail').val(),
+                company: $('#clientCompany').val(),
+                service_contract: $('#clientServiceContract').is(':checked'),
+                location: $('#clientLocation').val()
+            };
+
+            $.ajax({
+                url: '/api/clients',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(clientData),
+                success: function (response) {
+                    showSuccessMessage('تم إضافة العميل بنجاح!');
+                    $('#addClientModal').modal('hide');
+                    $('#addClientForm')[0].reset();
+                    loadClients(); // إعادة تحميل قائمة العملاء وتحديث القوائم المنسدلة
+                },
+                error: function (xhr) {
+                    showErrorMessage('خطأ في إضافة العميل: ' + (xhr.responseJSON ? xhr.responseJSON.error : xhr.responseText));
+                }
+            });
+        }
+
+        // إضافة فني جديد
+        function addNewTechnician() {
+            const technicianData = {
+                name: $('#technicianName').val(),
+                specialty: $('#technicianSpecialty').val(),
+                contact: $('#technicianContact').val(),
+                certification_level: parseInt($('#technicianCertificationLevel').val()) || null
+            };
+
+            $.ajax({
+                url: '/api/technicians',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(technicianData),
+                success: function (response) {
+                    showSuccessMessage('تم إضافة الفني بنجاح!');
+                    $('#addTechnicianModal').modal('hide');
+                    $('#addTechnicianForm')[0].reset();
+                    loadTechnicians(); // إعادة تحميل قائمة الفنيين وتحديث القوائم المنسدلة
+                },
+                error: function (xhr) {
+                    showErrorMessage('خطأ في إضافة الفني: ' + (xhr.responseJSON ? xhr.responseJSON.error : xhr.responseText));
+                }
+            });
+        }
+
+        // تحديث عدد العملاء والفنيين في التبويبات
+        function updateClientsCount() {
+            $('#clientsCount').text(allClients.length);
+        }
+
+        function updateTechniciansCount() {
+            $('#techniciansCount').text(allTechnicians.length);
+        }
+
+        // (الدوال loadStats, displayDetailedStats, updateStatistics, updateIssuesCount, initializeCharts, updateCharts, exportToCSV, convertToCSV, downloadCSV, getPriorityText, getStatusText, formatDate, showLoadingSpinner, showSuccessMessage, showErrorMessage, showToast, updateCurrentTime تبقى كما هي أو يتم تعديلها حسب الحاجة)
+        
+        // تحميل الإحصائيات
+        function loadStats() {
+            showLoadingSpinner('#statsList');
+            
+            $.ajax({
+                url: '/api/statistics',
+                type: 'GET',
+                success: function (response) {
+                    if (response) {
+                        displayDetailedStats(response); // تغيير هنا لتمرير الاستجابة مباشرة
+                    } else {
+                        $('#statsList').html('<div class="alert alert-info">لا توجد إحصائيات متاحة</div>');
+                    }
+                },
+                error: function () {
+                    $('#statsList').html('<div class="alert alert-danger">فشل في تحميل الإحصائيات</div>');
+                }
+            });
+        }
+
+        // عرض الإحصائيات التفصيلية
+        function displayDetailedStats(data) {
+            const statsHtml = `
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5><i class="fas fa-chart-bar"></i> إحصائيات شاملة</h5>
+                            </div>
+                            <div class="card-body">
+                                <pre class="bg-light p-3 rounded" style="max-height: 300px; overflow-y: auto;">${JSON.stringify(data, null, 2)}</pre>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5><i class="fas fa-info-circle"></i> ملخص سريع</h5>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>إجمالي المشاكل:</span>
+                                        <strong>${allIssues.length}</strong>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>المشاكل المفتوحة:</span>
+                                        <strong>${data.problems_by_status.open || 0}</strong>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>قيد المعالجة:</span>
+                                        <strong>${data.problems_by_status.in_progress || 0}</strong>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>المحلولة:</span>
+                                        <strong>${data.problems_by_status.solved || 0}</strong>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>المشاكل عالية الأولوية:</span>
+                                        <strong>${data.problems_by_priority['1'] || 0}</strong>
+                                    </li>
+                                     <li class="list-group-item d-flex justify-content-between">
+                                        <span>متوسط الحلول لكل مشكلة:</span>
+                                        <strong>${(data.avg_solutions_per_problem || 0).toFixed(2)}</strong>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            $('#statsList').html(statsHtml);
+        }
+
+        // تحديث الإحصائيات السريعة (في بطاقات Overview)
+        function updateStatistics() {
+            $('#totalIssues').text(allIssues.length);
+            $('#inProgressIssues').text(allIssues.filter(i => i.status === 'in_progress').length);
+            $('#solvedIssues').text(allIssues.filter(i => i.status === 'solved').length);
+            $('#highPriorityIssues').text(allIssues.filter(i => i.priority === 1).length);
+        }
+
+        // تحديث عدد المشاكل في التبويب
+        function updateIssuesCount() {
+            $('#issuesCount').text(filteredIssues.length);
+        }
+
+        // تهيئة المخططات
+        function initializeCharts() {
+            const statusCtx = document.getElementById('statusChart');
+            if (statusCtx && !statusChart) { // تأكد من عدم تهيئتها مرة أخرى
+                statusChart = new Chart(statusCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['مفتوحة', 'قيد المعالجة', 'محلولة', 'مغلقة'],
+                        datasets: [{
+                            data: [0, 0, 0, 0],
+                            backgroundColor: ['#3b82f6', '#f59e0b', '#10b981', '#6b7280']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+            }
+
+            const priorityCtx = document.getElementById('priorityChart');
+            if (priorityCtx && !priorityChart) { // تأكد من عدم تهيئتها مرة أخرى
+                priorityChart = new Chart(priorityCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['عالية', 'متوسطة', 'منخفضة'],
+                        datasets: [{
+                            label: 'عدد المشاكل',
+                            data: [0, 0, 0],
+                            backgroundColor: ['#ef4444', '#f59e0b', '#10b981']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    precision: 0 // عرض الأعداد الصحيحة فقط على المحور Y
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+        
+        // تحديث المخططات
+        function updateCharts() {
+            // جلب الإحصائيات لتحديث المخططات ببيانات دقيقة
+            $.ajax({
+                url: '/api/statistics',
+                type: 'GET',
+                success: function (data) {
+                    if (statusChart && data.problems_by_status) {
+                        statusChart.data.datasets[0].data = [
+                            data.problems_by_status.open || 0,
+                            data.problems_by_status.in_progress || 0,
+                            data.problems_by_status.solved || 0,
+                            data.problems_by_status.closed || 0
+                        ];
+                        statusChart.update();
+                    }
+
+                    if (priorityChart && data.problems_by_priority) {
+                        priorityChart.data.datasets[0].data = [
+                            data.problems_by_priority['1'] || 0,
+                            data.problems_by_priority['2'] || 0,
+                            data.problems_by_priority['3'] || 0
+                        ];
+                        priorityChart.update();
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('خطأ في جلب الإحصائيات لتحديث المخططات:', error);
+                }
+            });
+        }
+
+
+        // تصدير البيانات
+        function exportToCSV() {
+            const csvData = convertToCSV(filteredIssues);
+            downloadCSV(csvData, 'issues_export.csv');
+            showSuccessMessage('تم تصدير البيانات بنجاح!');
+        }
+
+        // تحويل البيانات إلى CSV
+        function convertToCSV(data) {
+            const headers = ['العنوان', 'الوصف', 'الطراز', 'الرقم التسلسلي', 'العميل', 'الفني المعين', 'الأولوية', 'الحالة', 'التاريخ'];
+            const rows = data.map(issue => {
+                const clientName = allClients.find(c => c.id === issue.client_id)?.name || 'غير معروف';
+                const technicianName = allTechnicians.find(t => t.id === issue.technician_id)?.name || 'لم يتم التعيين';
+                return [
+                    issue.title,
+                    issue.description || '',
+                    issue.model,
+                    issue.serial_number,
+                    clientName,
+                    technicianName,
+                    getPriorityText(issue.priority),
+                    getStatusText(issue.status),
+                    formatDate(issue.created_at)
+                ];
+            });
+            
+            return [headers, ...rows].map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(',')).join('\n'); // معالجة الفواصل داخل البيانات
+        }
+
+        // تنزيل ملف CSV
+        function downloadCSV(csvData, filename) {
+            const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
+            link.click();
+        }
+
+        // وظائف مساعدة
+        function getPriorityText(priority) {
+            const priorities = { 1: 'عالية', 2: 'متوسطة', 3: 'منخفضة' };
+            return priorities[priority] || 'غير محدد';
+        }
+
+        function getStatusText(status) {
+            const statuses = {
+                'open': 'مفتوحة',
+                'in_progress': 'قيد المعالجة',
+                'solved': 'محلولة',
+                'closed': 'مغلقة',
+                'pending_parts': 'بانتظار قطع غيار' // إضافة الحالة الجديدة هنا
+            };
+            return statuses[status] || 'غير محدد';
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return 'غير محدد';
+            const date = new Date(dateString);
+            return date.toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+        }
+
+        function showLoadingSpinner(selector) {
+            $(selector).html(`
+                <div class="loading-spinner">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>جاري التحميل...</p>
+                </div>
+            `);
+        }
+
+        function showSuccessMessage(message) {
+            showToast(message, 'success');
+        }
+
+        function showErrorMessage(message) {
+            showToast(message, 'error');
+        }
+
+        function showToast(message, type = 'info') {
+            const toastClass = type === 'success' ? 'bg-success' : type === 'error' ? 'bg-danger' : 'bg-info';
+            const toast = $(`
+                <div class="toast align-items-center text-white ${toastClass} border-0 position-fixed top-0 end-0 m-3" role="alert" style="z-index: 9999;">
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-triangle' : 'info-circle'}"></i>
+                            ${message}
+                        </div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                    </div>
+                </div>
+            `);
+            
+            $('body').append(toast);
+            const bsToast = new bootstrap.Toast(toast[0]);
+            bsToast.show();
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 5000);
+        }
+
+        function updateCurrentTime() {
+            const now = new Date();
+            const timeString = now.toLocaleString('ar-EG');
+            // يمكن إضافة عرض الوقت في مكان ما في الواجهة إذا رغبت
+        }
+
+        // إضافة تأثيرات بصرية للبطاقات
+        $(document).on('mouseenter', '.issue-card', function() {
+            $(this).addClass('shadow-lg').css('transform', 'translateY(-5px)');
+        });
+
+        $(document).on('mouseleave', '.issue-card', function() {
+            $(this).removeClass('shadow-lg').css('transform', 'translateY(0)');
+        });
+
+        // إضافة اختصارات لوحة المفاتيح
+        $(document).keydown(function(e) {
+            if (e.ctrlKey) {
+                switch(e.which) {
+                    case 78: // Ctrl+N
+                        e.preventDefault();
+                        $('#addIssueModal').modal('show');
+                        break;
+                    case 82: // Ctrl+R
+                        e.preventDefault();
+                        loadIssues();
+                        break;
+                    case 70: // Ctrl+F
+                        e.preventDefault();
+                        $('#searchInput').focus();
+                        break;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
