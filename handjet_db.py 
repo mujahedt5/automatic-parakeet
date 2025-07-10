@@ -1,0 +1,790 @@
+import sqlite3
+import os
+import logging
+from datetime import datetime
+from typing import Optional, List, Dict, Any
+from contextlib import contextmanager
+
+
+class HandJetProblemDB:
+    """
+    نظام إدارة قاعدة بيانات مشاكل طابعة HandJet
+    """
+
+    def __init__(self, db_path: str = "handjet_problems.db"):
+        """
+        تهيئة قاعدة البيانات
+
+        Args:
+            db_path: مسار ملف قاعدة البيانات
+        """
+        # التأكد من وجود المجلد وإنشاؤه إذا لم يكن موجوداً
+        db_dir = os.path.dirname(os.path.abspath(db_path))
+        if db_dir and not os.path.exists(db_dir):
+            os.makedirs(db_dir, exist_ok=True)
+
+        self.db_path = os.path.abspath(db_path)
+        self._setup_logging()
+        self._create_database()
+
+    def _setup_logging(self):
+        """إعداد نظام تسجيل متقدم مع دعم النص العربي"""
+        self.logger = logging.getLogger('SupportSystemDB')
+        self.logger.setLevel(logging.DEBUG)
+
+        # منع إضافة handlers متعددة
+        if self.logger.handlers:
+            self.logger.handlers.clear()
+
+        # إنشاء formatter
+        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+        try:
+            # تسجيل في الملف مع ترميز UTF-8
+            file_handler = logging.FileHandler('support_system.log', encoding='utf-8')
+            file_handler.setFormatter(formatter)
+            self.logger.addHandler(file_handler)
+        except Exception:
+            # في حالة فشل إنشاء ملف التسجيل، نكتفي بالكونسول
+            pass
+
+        try:
+            # تسجيل في الكونسول مع ترميز UTF-8
+            import sys
+            console_handler = logging.StreamHandler(sys.stdout)
+            console_handler.setFormatter(formatter)
+
+            # تعيين ترميز UTF-8 للكونسول إذا أمكن
+            if hasattr(sys.stdout, 'reconfigure'):
+                try:
+                    sys.stdout.reconfigure(encoding='utf-8')
+                except Exception:
+                    pass
+
+            self.logger.addHandler(console_handler)
+        except Exception:
+            # في حالة فشل إعداد الكونسول، نستخدم print كبديل
+            self.use_print_fallback = True
+
+    @contextmanager
+    def _get_connection(self):
+        """إدارة الاتصال بقاعدة البيانات بشكل آمن"""
+        conn = None
+        try:
+            conn = sqlite3.connect(self.db_path)
+            conn.row_factory = sqlite3.Row  # للحصول على النتائج كـ dictionary
+            yield conn
+        except sqlite3.Error as e:
+            self.logger.error(f"خطأ في قاعدة البيانات: {e}")
+            if conn:
+                conn.rollback()
+            raise
+        finally:
+            if conn:
+                conn.close()
+
+    def _create_database(self):
+        """إنشاء قاعدة البيانات والجداول"""
+        try:
+            with self._get_connection() as conn:
+                cursor = conn.cursor()
+
+                # جدول العملاء
+                cursor.execute("""
+                               CREATE TABLE IF NOT EXISTS clients
+                               (
+                                   id
+                                   INTEGER
+                                   PRIMARY
+                                   KEY
+                                   AUTOINCREMENT,
+                                   name
+                                   TEXT
+                                   NOT
+                                   NULL,
+                                   contact_phone
+                                   TEXT
+                                   NOT
+                                   NULL,
+                                   email
+                                   TEXT,
+                                   company
+                                   TEXT,
+                                   service_contract
+                                   BOOLEAN
+                                   DEFAULT
+                                   0,
+                                   location
+                                   TEXT
+                               )
+                               """)
+
+                # جدول الفنيين
+                cursor.execute("""
+                               CREATE TABLE IF NOT EXISTS technicians
+                               (
+                                   id
+                                   INTEGER
+                                   PRIMARY
+                                   KEY
+                                   AUTOINCREMENT,
+                                   name
+                                   TEXT
+                                   NOT
+                                   NULL,
+                                   specialty
+                                   TEXT,
+                                   contact
+                                   TEXT,
+                                   certification_level
+                                   INTEGER
+                               )
+                               """)
+
+                # جدول المشاكل المحسن
+                cursor.execute("""
+                               CREATE TABLE IF NOT EXISTS problems
+                               (
+                                   id
+                                   INTEGER
+                                   PRIMARY
+                                   KEY
+                                   AUTOINCREMENT,
+                                   title
+                                   TEXT
+                                   NOT
+                                   NULL,
+                                   description
+                                   TEXT,
+                                   model
+                                   TEXT
+                                   NOT
+                                   NULL,
+                                   error_code
+                                   VARCHAR
+                               (
+                                   10
+                               ),
+                                   serial_number TEXT NOT NULL,
+                                   component TEXT,
+                                   ink_type TEXT,
+                                   surface_type TEXT,
+                                   priority INTEGER DEFAULT 2 CHECK
+                               (
+                                   priority
+                                   IN
+                               (
+                                   1,
+                                   2,
+                                   3
+                               )),
+                                   status TEXT DEFAULT 'open' CHECK
+                               (
+                                   status
+                                   IN
+                               (
+                                   'open',
+                                   'in_progress',
+                                   'solved',
+                                   'closed',
+                                   'pending_parts'
+                               )),
+                                   failure_cause TEXT CHECK
+                               (
+                                   failure_cause
+                                   IN
+                               (
+                                   'hardware',
+                                   'software',
+                                   'user_error',
+                                   'environment'
+                               )),
+                                   technician_id INTEGER,
+                                   client_id INTEGER NOT NULL,
+                                   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                                   updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                                   closed_at DATETIME,
+                                   estimated_repair_time INTEGER,
+                                   repair_cost REAL,
+                                   image_path TEXT,
+                                   reported_by TEXT,
+                                   FOREIGN KEY
+                               (
+                                   technician_id
+                               ) REFERENCES technicians
+                               (
+                                   id
+                               ),
+                                   FOREIGN KEY
+                               (
+                                   client_id
+                               ) REFERENCES clients
+                               (
+                                   id
+                               )
+                                   )
+                               """)
+
+                # جدول الحلول
+                cursor.execute("""
+                               CREATE TABLE IF NOT EXISTS solutions
+                               (
+                                   id
+                                   INTEGER
+                                   PRIMARY
+                                   KEY
+                                   AUTOINCREMENT,
+                                   problem_id
+                                   INTEGER
+                                   NOT
+                                   NULL,
+                                   title
+                                   TEXT
+                                   NOT
+                                   NULL,
+                                   steps
+                                   TEXT
+                                   NOT
+                                   NULL,
+                                   required_parts
+                                   TEXT,
+                                   tools_needed
+                                   TEXT,
+                                   actual_time
+                                   INTEGER,
+                                   time_required
+                                   INTEGER,
+                                   success_rate
+                                   REAL
+                                   DEFAULT
+                                   0.0,
+                                   difficulty_level
+                                   INTEGER
+                                   DEFAULT
+                                   2
+                                   CHECK (
+                                   difficulty_level
+                                   IN
+                               (
+                                   1,
+                                   2,
+                                   3,
+                                   4,
+                                   5
+                               )),
+                                   solution_type TEXT,
+                                   is_preventive BOOLEAN DEFAULT 0,
+                                   notes TEXT,
+                                   created_by TEXT,
+                                   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                                   FOREIGN KEY
+                               (
+                                   problem_id
+                               ) REFERENCES problems
+                               (
+                                   id
+                               ) ON DELETE CASCADE
+                                   )
+                               """)
+
+                # جدول قطع الغيار
+                cursor.execute("""
+                               CREATE TABLE IF NOT EXISTS parts
+                               (
+                                   id
+                                   INTEGER
+                                   PRIMARY
+                                   KEY
+                                   AUTOINCREMENT,
+                                   part_number
+                                   TEXT
+                                   UNIQUE
+                                   NOT
+                                   NULL,
+                                   name
+                                   TEXT
+                                   NOT
+                                   NULL,
+                                   description
+                                   TEXT,
+                                   compatible_models
+                                   TEXT,
+                                   stock_quantity
+                                   INTEGER
+                                   DEFAULT
+                                   0,
+                                   cost_price
+                                   REAL,
+                                   selling_price
+                                   REAL
+                               )
+                               """)
+
+                # جدول تقييم الحلول
+                cursor.execute("""
+                               CREATE TABLE IF NOT EXISTS solution_ratings
+                               (
+                                   id
+                                   INTEGER
+                                   PRIMARY
+                                   KEY
+                                   AUTOINCREMENT,
+                                   solution_id
+                                   INTEGER
+                                   NOT
+                                   NULL,
+                                   rating
+                                   INTEGER
+                                   CHECK (
+                                   rating
+                                   IN
+                               (
+                                   1,
+                                   2,
+                                   3,
+                                   4,
+                                   5
+                               )),
+                                   feedback TEXT,
+                                   rated_by TEXT,
+                                   rated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                                   FOREIGN KEY
+                               (
+                                   solution_id
+                               ) REFERENCES solutions
+                               (
+                                   id
+                               ) ON DELETE CASCADE
+                                   )
+                               """)
+
+                # إنشاء الفهارس لتحسين الأداء
+                cursor.execute("CREATE INDEX IF NOT EXISTS idx_problems_model ON problems(model)")
+                cursor.execute("CREATE INDEX IF NOT EXISTS idx_problems_status ON problems(status)")
+                cursor.execute("CREATE INDEX IF NOT EXISTS idx_solutions_problem_id ON solutions(problem_id)")
+
+                conn.commit()
+                self.logger.info("The database and tables were created successfully.")
+
+        except Exception as e:
+            self.logger.error(f"خطأ في إنشاء قاعدة البيانات: {e}")
+            raise
+
+    def add_client(self, name: str, contact_phone: str, email: str = None,
+                   company: str = None, service_contract: bool = False, location: str = None) -> int:
+        """إضافة عميل جديد"""
+        try:
+            with self._get_connection() as conn:
+                cursor = conn.cursor()
+                cursor.execute("""
+                               INSERT INTO clients (name, contact_phone, email, company, service_contract, location)
+                               VALUES (?, ?, ?, ?, ?, ?)
+                               """, (name, contact_phone, email, company, service_contract, location))
+
+                client_id = cursor.lastrowid
+                conn.commit()
+                self.logger.info(f"تم إضافة عميل جديد بمعرف: {client_id}")
+                return client_id
+        except Exception as e:
+            self.logger.error(f"خطأ في إضافة العميل: {e}")
+            raise
+
+    def get_clients(self) -> List[Dict]:
+        """
+        الحصول على قائمة بجميع العملاء
+        """
+        try:
+            with self._get_connection() as conn:
+                cursor = conn.cursor()
+                cursor.execute(
+                    "SELECT id, name, contact_phone, email, company, service_contract, location FROM clients ORDER BY name")
+                return [dict(row) for row in cursor.fetchall()]
+        except Exception as e:
+            self.logger.error(f"خطأ في جلب قائمة العملاء: {e}")
+            raise
+
+    def add_technician(self, name: str, specialty: str = None, contact: str = None,
+                       certification_level: int = None) -> int:
+        """إضافة فني جديد"""
+        try:
+            with self._get_connection() as conn:
+                cursor = conn.cursor()
+                cursor.execute("""
+                               INSERT INTO technicians (name, specialty, contact, certification_level)
+                               VALUES (?, ?, ?, ?)
+                               """, (name, specialty, contact, certification_level))
+
+                technician_id = cursor.lastrowid
+                conn.commit()
+                self.logger.info(f"تم إضافة فني جديد بمعرف: {technician_id}")
+                return technician_id
+        except Exception as e:
+            self.logger.error(f"خطأ في إضافة الفني: {e}")
+            raise
+
+    def get_technicians(self) -> List[Dict]:
+        """
+        الحصول على قائمة بجميع الفنيين
+        """
+        try:
+            with self._get_connection() as conn:
+                cursor = conn.cursor()
+                cursor.execute(
+                    "SELECT id, name, specialty, contact, certification_level FROM technicians ORDER BY name")
+                return [dict(row) for row in cursor.fetchall()]
+        except Exception as e:
+            self.logger.error(f"خطأ في جلب قائمة الفنيين: {e}")
+            raise
+
+    def add_problem(self, title: str, description: str, model: str, serial_number: str,
+                    client_id: int, error_code: str = None, component: str = None,
+                    ink_type: str = None, surface_type: str = None, priority: int = 2,
+                    image_path: str = None, reported_by: str = None, **kwargs) -> int:
+        """
+        إضافة مشكلة جديدة
+
+        Returns:
+            معرف المشكلة المضافة
+        """
+        try:
+            with self._get_connection() as conn:
+                cursor = conn.cursor()
+                cursor.execute("""
+                               INSERT INTO problems (title, description, model, serial_number, client_id,
+                                                     error_code, component, ink_type, surface_type, priority,
+                                                     image_path, reported_by)
+                               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                               """, (title, description, model, serial_number, client_id, error_code,
+                                     component, ink_type, surface_type, priority, image_path, reported_by))
+
+                problem_id = cursor.lastrowid
+                conn.commit()
+                self.logger.info(f"تم إضافة مشكلة جديدة بمعرف: {problem_id}")
+                return problem_id
+
+        except Exception as e:
+            self.logger.error(f"خطأ في إضافة المشكلة: {e}")
+            raise
+
+    def add_solution(self, problem_id: int, title: str, steps: str,
+                     tools_needed: str = None, time_required: int = None,
+                     solution_type: str = None, difficulty_level: int = 2,
+                     notes: str = None, created_by: str = None) -> int:
+        """
+        إضافة حل لمشكلة معينة
+
+        Returns:
+            معرف الحل المضاف
+        """
+        try:
+            with self._get_connection() as conn:
+                cursor = conn.cursor()
+
+                # التحقق من وجود المشكلة
+                cursor.execute("SELECT id FROM problems WHERE id = ?", (problem_id,))
+                if not cursor.fetchone():
+                    raise ValueError(f"المشكلة بمعرف {problem_id} غير موجودة")
+
+                cursor.execute("""
+                               INSERT INTO solutions (problem_id, title, steps, tools_needed,
+                                                      time_required, solution_type, difficulty_level,
+                                                      notes, created_by)
+                               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                               """, (problem_id, title, steps, tools_needed, time_required,
+                                     solution_type, difficulty_level, notes, created_by))
+
+                solution_id = cursor.lastrowid
+                conn.commit()
+                self.logger.info(f"تم إضافة حل جديد بمعرف: {solution_id}")
+                return solution_id
+
+        except Exception as e:
+            self.logger.error(f"خطأ في إضافة الحل: {e}")
+            raise
+
+    def update_part_stock(self, part_number: str, quantity_change: int):
+        """تحديث مخزون قطعة غيار"""
+        try:
+            with self._get_connection() as conn:
+                cursor = conn.cursor()
+                cursor.execute("""
+                               UPDATE parts
+                               SET stock_quantity = stock_quantity + ?
+                               WHERE part_number = ?
+                               """, (quantity_change, part_number))
+
+                conn.commit()
+                self.logger.info(f"تم تحديث مخزون القطعة {part_number}")
+        except Exception as e:
+            self.logger.error(f"خطأ في تحديث المخزون: {e}")
+            raise
+
+    def get_technician_performance(self, technician_id: int) -> Dict:
+        """حساب أداء الفني"""
+        try:
+            with self._get_connection() as conn:
+                cursor = conn.cursor()
+                cursor.execute("""
+                               SELECT COUNT(*)                                           AS total_problems,
+                                      AVG(estimated_repair_time)                         AS avg_repair_time,
+                                      AVG(repair_cost)                                   AS avg_repair_cost,
+                                      SUM(CASE WHEN status = 'closed' THEN 1 ELSE 0 END) AS closed_count
+                               FROM problems
+                               WHERE technician_id = ?
+                               """, (technician_id,))
+
+                result = cursor.fetchone()
+                return dict(result) if result else {}
+        except Exception as e:
+            self.logger.error(f"خطأ في حساب أداء الفني: {e}")
+            raise
+
+    def get_problems(self, status: str = None, model: str = None,
+                     priority: int = None) -> List[Dict]:
+        """
+        البحث عن المشاكل مع إمكانية التصفية
+        """
+        try:
+            with self._get_connection() as conn:
+                cursor = conn.cursor()
+
+                query = "SELECT * FROM problems WHERE 1=1"
+                params = []
+
+                if status:
+                    query += " AND status = ?"
+                    params.append(status)
+                if model:
+                    query += " AND model = ?"
+                    params.append(model)
+                if priority:
+                    query += " AND priority = ?"
+                    params.append(priority)
+
+                query += " ORDER BY priority DESC, created_at DESC"
+
+                cursor.execute(query, params)
+                return [dict(row) for row in cursor.fetchall()]
+
+        except Exception as e:
+            self.logger.error(f"خطأ في البحث عن المشاكل: {e}")
+            raise
+
+    def get_solutions_for_problem(self, problem_id: int) -> List[Dict]:
+        """
+        الحصول على جميع الحلول لمشكلة معينة
+        """
+        try:
+            with self._get_connection() as conn:
+                cursor = conn.cursor()
+                cursor.execute("""
+                               SELECT s.*, AVG(sr.rating) as avg_rating, COUNT(sr.id) as rating_count
+                               FROM solutions s
+                                        LEFT JOIN solution_ratings sr ON s.id = sr.solution_id
+                               WHERE s.problem_id = ?
+                               GROUP BY s.id
+                               ORDER BY avg_rating DESC, s.created_at DESC
+                               """, (problem_id,))
+
+                return [dict(row) for row in cursor.fetchall()]
+
+        except Exception as e:
+            self.logger.error(f"خطأ في البحث عن الحلول: {e}")
+            raise
+
+    def update_problem_status(self, problem_id: int, status: str):
+        """
+        تحديث حالة المشكلة
+        """
+        valid_statuses = ['open', 'in_progress', 'solved', 'closed', 'pending_parts']
+        if status not in valid_statuses:
+            raise ValueError(f"الحالة يجب أن تكون إحدى: {valid_statuses}")
+
+        try:
+            with self._get_connection() as conn:
+                cursor = conn.cursor()
+                cursor.execute("""
+                               UPDATE problems
+                               SET status     = ?,
+                                   updated_at = CURRENT_TIMESTAMP,
+                                   closed_at  = CASE WHEN ? = 'closed' THEN CURRENT_TIMESTAMP ELSE closed_at END
+                               WHERE id = ?
+                               """, (status, status, problem_id))
+
+                if cursor.rowcount == 0:
+                    raise ValueError(f"المشكلة بمعرف {problem_id} غير موجودة")
+
+                conn.commit()
+                self.logger.info(f"تم تحديث حالة المشكلة {problem_id} إلى {status}")
+
+        except Exception as e:
+            self.logger.error(f"خطأ في تحديث حالة المشكلة: {e}")
+            raise
+
+    def rate_solution(self, solution_id: int, rating: int,
+                      feedback: str = None, rated_by: str = None):
+        """
+        تقييم حل معين
+        """
+        if rating not in [1, 2, 3, 4, 5]:
+            raise ValueError("التقييم يجب أن يكون بين 1 و 5")
+
+        try:
+            with self._get_connection() as conn:
+                cursor = conn.cursor()
+                cursor.execute("""
+                               INSERT INTO solution_ratings (solution_id, rating, feedback, rated_by)
+                               VALUES (?, ?, ?, ?)
+                               """, (solution_id, rating, feedback, rated_by))
+
+                conn.commit()
+                self.logger.info(f"تم تقييم الحل {solution_id} بتقييم {rating}")
+
+        except Exception as e:
+            self.logger.error(f"خطأ في تقييم الحل: {e}")
+            raise
+
+    def get_database_info(self) -> Dict[str, Any]:
+        """
+        الحصول على معلومات قاعدة البيانات
+        """
+        try:
+            info = {
+                'path': self.db_path,
+                'exists': os.path.exists(self.db_path),
+                'size_mb': 0,
+                'created_at': None,
+                'last_modified': None
+            }
+
+            if os.path.exists(self.db_path):
+                stat = os.stat(self.db_path)
+                info['size_mb'] = round(stat.st_size / (1024 * 1024), 2)
+                info['created_at'] = datetime.fromtimestamp(stat.st_ctime).isoformat()
+                info['last_modified'] = datetime.fromtimestamp(stat.st_mtime).isoformat()
+
+            return info
+
+        except Exception as e:
+            self.logger.error(f"خطأ في الحصول على معلومات قاعدة البيانات: {e}")
+            raise
+
+    def get_system_statistics(self) -> Dict[str, Any]:
+        """
+        الحصول على إحصائيات النظام
+        """
+        try:
+            with self._get_connection() as conn:
+                cursor = conn.cursor()
+
+                stats = {}
+
+                # عدد المشاكل حسب الحالة
+                cursor.execute("""
+                               SELECT status, COUNT(*) as count
+                               FROM problems
+                               GROUP BY status
+                               """)
+                stats['problems_by_status'] = dict(cursor.fetchall())
+
+                # عدد المشاكل حسب الأولوية
+                cursor.execute("""
+                               SELECT priority, COUNT(*) as count
+                               FROM problems
+                               GROUP BY priority
+                               """)
+                stats['problems_by_priority'] = dict(cursor.fetchall())
+
+                # متوسط عدد الحلول لكل مشكلة
+                cursor.execute("""
+                               SELECT AVG(solution_count) as avg_solutions
+                               FROM (SELECT COUNT(*) as solution_count
+                                     FROM solutions
+                                     GROUP BY problem_id)
+                               """)
+                result = cursor.fetchone()
+                stats['avg_solutions_per_problem'] = result[0] if result and result[0] else 0
+
+                return stats
+
+        except Exception as e:
+            self.logger.error(f"خطأ في الحصول على الإحصائيات: {e}")
+            raise
+
+    def change_database_path(self, new_path: str, copy_data: bool = False):
+        """
+        تغيير مسار قاعدة البيانات
+
+        Args:
+            new_path: المسار الجديد لقاعدة البيانات
+            copy_data: هل تريد نسخ البيانات الموجودة للمسار الجديد
+        """
+        try:
+            old_path = self.db_path
+
+            # التأكد من وجود المجلد الجديد
+            new_dir = os.path.dirname(os.path.abspath(new_path))
+            if new_dir and not os.path.exists(new_dir):
+                os.makedirs(new_dir, exist_ok=True)
+
+            # إذا كان المستخدم يريد نسخ البيانات
+            if copy_data and os.path.exists(old_path):
+                import shutil
+                shutil.copy2(old_path, new_path)
+                self.logger.info(f"تم نسخ البيانات من {old_path} إلى {new_path}")
+
+            # تحديث المسار
+            self.db_path = os.path.abspath(new_path)
+
+            # إنشاء قاعدة البيانات الجديدة إذا لم تكن موجودة
+            self._create_database()
+
+            self.logger.info(f"تم تغيير مسار قاعدة البيانات إلى: {self.db_path}")
+
+        except Exception as e:
+            self.logger.error(f"خطأ في تغيير مسار قاعدة البيانات: {e}")
+            raise
+
+
+# مثال على الاستخدام
+if __name__ == "__main__":
+    # إنشاء قاعدة البيانات
+    db = HandJetProblemDB("handjet_problems.db")
+
+    # إضافة عميل تجريبي
+    client_id = db.add_client(
+        name="شركة الطباعة المتقدمة",
+        contact_phone="01234567890",
+        email="info@printing.com",
+        company="شركة الطباعة المتقدمة",
+        service_contract=True,
+        location="القاهرة"
+    )
+
+    # إضافة مشكلة تجريبية
+    problem_id = db.add_problem(
+        title="الطابعة لا تطبع بوضوح",
+        description="النص يظهر باهتاً وغير واضح",
+        model="HandJet EBS-250",
+        serial_number="HJ250-2024-001",
+        client_id=client_id,
+        ink_type="Quick-dry",
+        surface_type="Metal",
+        priority=2,
+        reported_by="فني الصيانة"
+    )
+
+    # إضافة حل للمشكلة
+    solution_id = db.add_solution(
+        problem_id=problem_id,
+        title="تنظيف رأس الطباعة",
+        steps="1. أطفئ الطابعة\n2. اخرج خرطوشة الحبر\n3. نظف رأس الطباعة بقطعة قماش ناعمة\n4. اتركها تجف لمدة 5 دقائق\n5. أعد تركيب الخرطوشة",
+        tools_needed="قطعة قماش ناعمة، محلول تنظيف",
+        time_required=10,
+        solution_type="maintenance",
+        difficulty_level=2,
+        created_by="خبير الصيانة"
+    )
+
+    print(f"تم إنشاء المشكلة بمعرف: {problem_id}")
+    print(f"تم إنشاء الحل بمعرف: {solution_id}")
